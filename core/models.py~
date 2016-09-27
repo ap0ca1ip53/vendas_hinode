@@ -1,0 +1,38 @@
+# -*- encoding: utf-8 -*-
+
+from __future__ import unicode_literals
+
+from django.db import models
+from django.contrib.auth.models import User
+from django.utils.encoding import python_2_unicode_compatible
+
+
+# Create your models here.
+@python_2_unicode_compatible
+class Produto(models.Model):
+    codigo = models.IntegerField()
+    codigo_barra = models.CharField(max_length=13)
+    nome = models.CharField(max_length=40)
+    valor = models.FloatField()
+
+    def __str__(self):
+        return self.nome
+
+@python_2_unicode_compatible
+class Estoque(models.Model):
+    produto = models.ForeignKey(Produto)
+    vendedor = models.ForeignKey(User)
+    valor = models.FloatField()
+    quantidade = models.IntegerField()
+
+    
+@python_2_unicode_compatible
+class Cliente(models.Model):
+    nome = models.CharField(max_length=60)
+    endereco = models.CharField(max_length=60)
+    bairro = models.CharField(max_length=40)
+    dt_nascimento = models.DateField()
+    
+    def __str__(self):
+        return self.nome
+

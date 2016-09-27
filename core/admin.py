@@ -1,0 +1,9 @@
+# -*- encoding: utf-8 -*-
+
+from django.contrib import admin
+from core.models import Produto, Cliente, Estoque
+
+admin.site.register(Produto)
+admin.site.register(Cliente)
+admin.site.register(Estoque)
+# Register your models here.

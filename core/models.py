@@ -8,35 +8,51 @@ from django.utils.encoding import python_2_unicode_compatible
 
 
 # Create your models here.
-@python_2_unicode_compatible
 class Produto(models.Model):
+    GENERO = (
+        ('M', 'Masculino'),
+        ('F', 'Feminino'),
+        ('N', 'Não se aplica'),
+    )
     codigo = models.IntegerField()
     codigo_barra = models.CharField(max_length=13)
     nome = models.CharField(max_length=40)
-    valor = models.FloatField()
+    genero = models.CharField(max_length=1, choices=GENERO)
 
-
-    def __str__(self):
+    def __unicode__(self):
         return self.nome
 
-#@python_2_unicode_compatible
+
 class Estoque(models.Model):
     produto = models.ForeignKey(Produto)
     vendedor = models.ForeignKey(User)
     valor = models.FloatField()
     quantidade = models.IntegerField()
 
-    def __str__(self):
-        return self.produto
+    def __unicode__(self):
+        return self.produto.nome
 
 
-    
-@python_2_unicode_compatible
+class NotaDeEntrada(models.Model):
+    dataDaCompra = models.DateField()
+    valorDaNota = models.FloatField()
+
+
+class ProdutosPorNota(models.Model):
+    notaDeEntrada = models.ForeignKey(NotaDeEntrada)
+    itemDoEstoque = models.ForeignKey(Estoque)
+
+
 class Cliente(models.Model):
+    SEXO = (
+        ('M', 'Masculino'),
+        ('F', 'Feminino'),
+    )
     nome = models.CharField(max_length=60)
+    sexo = models.CharField(max_length=1, choices=SEXO)
     endereco = models.CharField(max_length=60)
     bairro = models.CharField(max_length=40)
     dt_nascimento = models.DateField()
     
-    def __str__(self):
+    def __unicode__(self):
         return self.nome

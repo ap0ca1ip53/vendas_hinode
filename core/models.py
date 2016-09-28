@@ -40,7 +40,14 @@ class NotaDeEntrada(models.Model):
 
 class ProdutosPorNota(models.Model):
     notaDeEntrada = models.ForeignKey(NotaDeEntrada)
-    itemDoEstoque = models.ForeignKey(Estoque)
+    itemDoEstoque = models.ForeignKey(Estoque, verbose_name='Produto')
+    quantidade = models.IntegerField()
+
+    def save(self, *args, **kwargs):
+        self.itemDoEstoque.quantidade = self.itemDoEstoque.quantidade + self.quantidade
+        self.itemDoEstoque.save()
+
+        super(ProdutosPorNota, self).save(*args, **kwargs)
 
 
 class Cliente(models.Model):

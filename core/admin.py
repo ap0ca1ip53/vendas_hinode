@@ -13,9 +13,15 @@ class EstoqueAdmin(admin.ModelAdmin):
 
 admin.site.register(Estoque, EstoqueAdmin)
 
-class ProdutosPorNotaInline(admin.StackedInline):
+class ProdutosPorNotaInline(admin.TabularInline):
     model = ProdutosPorNota
     can_delete = False
+    extra = 0
+    verbose_name = 'produto'
+    verbose_name_plural =  'produtos por nota'
+    fieldsets = (
+        (None, {'fields': ('itemDoEstoque', 'quantidade')}),
+    )
 
 class NotaDeEntradaAdmin(admin.ModelAdmin):
     inlines = (ProdutosPorNotaInline, )

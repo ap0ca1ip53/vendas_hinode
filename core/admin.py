@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.contrib import admin
-from core.models import Produto, Cliente, Estoque, NotaDeEntrada, ProdutosPorNota
+from core.models import Produto, Cliente, Estoque, NotaDeEntrada, ProdutosPorNota, ProdutosPorVenda, Venda
 
 class EstoqueAdmin(admin.ModelAdmin):
     fields = ('produto', 'valor', 'quantidade')
@@ -24,10 +24,22 @@ class ProdutosPorNotaInline(admin.TabularInline):
     )
 
 class NotaDeEntradaAdmin(admin.ModelAdmin):
+    list_display = ('id', 'dataDaCompra', 'valorDaNota')
     inlines = (ProdutosPorNotaInline, )
 
-
 admin.site.register(NotaDeEntrada, NotaDeEntradaAdmin)
+
+class ProdutosPorVendaInline(admin.TabularInline):
+    model = ProdutosPorVenda
+    extra = 0
+    verbose_name_plural = 'Produtos'
+    verbose_name = 'Produto'
+
+class VendaAdmin(admin.ModelAdmin):
+    inlines = (ProdutosPorVendaInline, )
+
+admin.site.register(Venda, VendaAdmin)
+
 admin.site.register(Produto)
 admin.site.register(Cliente)
 

@@ -30,6 +30,7 @@ class Estoque(models.Model):
     class Meta:
         verbose_name_plural = 'Estoque'
 
+
     def __unicode__(self):
         return self.produto.nome
 
@@ -52,11 +53,11 @@ class NotaDeEntrada(models.Model):
 
 class ProdutosPorNota(models.Model):
     notaDeEntrada = models.ForeignKey(NotaDeEntrada)
-    itemDoEstoque = models.ForeignKey(Estoque, verbose_name='Produto')
+    estoque = models.ForeignKey(Estoque, verbose_name='Produto')
     quantidade = models.IntegerField()
 
     def save(self, *args, **kwargs):
-        self.itemDoEstoque.incrementaEstoque(self.quantidade)
+        self.estoque.incrementaEstoque(self.quantidade)
         super(ProdutosPorNota, self).save(*args, **kwargs)
 
 
@@ -69,34 +70,28 @@ class Cliente(models.Model):
     sexo = models.CharField(max_length=1, choices=SEXO)
     endereco = models.CharField(max_length=60)
     bairro = models.CharField(max_length=40)
-    dt_nascimento = models.DateField()
+    dt_nascimento = models.DateField(null=True, blank=True)
     
     def __unicode__(self):
         return self.nome
 
-class FormaDePagamento(models.Model):
-    EH_PARCELADO = (
-        (True, 'Sim'),
-        (False, 'Não')
-    )
-    descricao = models.CharField(max_length=60)
-    parcelado = models.BooleanField()
-    percentualDaOperadora = models.DecimalField(max_digits=5, decimal_places=2)
-    prazoParaRecebimento = models.IntegerField()
-
 
 class Venda(models.Model):
-    dataDaVenda = models.DateField(verbose_name='Data da compra')
+    dataDaVenda = models.DateField(verbose_name='Data da venda')
     cliente = models.ForeignKey(Cliente)
-    formaDePagamento = models.ForeignKey(FormaDePagamento)
     quantidadeDeParcelas = models.IntegerField()
     produtosPorVenda = models.ManyToManyField(Estoque, through='ProdutosPorVenda')
+
+    def __unicode__(self):
+        return '%s - %s' % (self.cliente.nome, self.dataDaVenda)
 
     @property
     def total_da_venda(self):
         total_da_venda = 0
         for p in self.produtosPorVenda.all():
-            total_da_venda = total_da_venda + p.valorDeVenda
+            vl_unitario = ProdutosPorVenda.objects.get(venda=self, estoque=p).valorDeVenda
+            quantidade = ProdutosPorVenda.objects.get(venda=self, estoque=p).quantidade
+            total_da_venda = total_da_venda + vl_unitario * quantidade
 
         return total_da_venda
 
@@ -108,3 +103,14 @@ class ProdutosPorVenda(models.Model):
     desconto = models.DecimalField(max_digits=5, decimal_places=2)
     valorDeVenda = models.DecimalField(max_digits=12, decimal_places=2)
 
+    def save(self, *args, **kwargs):
+        self.estoque.decrementaEstoque(self.quantidade)
+        super(ProdutosPorVenda, self).save(*args, **kwargs)
+
+
+class Parcela(models.Model):
+    venda = models.ForeignKey(Venda)
+    valorDaParcela = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Valor da Parcela')
+    valorPago = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True, verbose_name='Valor Pago')
+    dataDeVencimento = models.DateField(verbose_name='Data de vencimento')
+    dataDePagamento = models.DateField(null=True, blank=True, verbose_name='Data de pagamento')

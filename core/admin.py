@@ -1,11 +1,17 @@
 # -*- encoding: utf-8 -*-
 
 from django.contrib import admin
-from core.models import Produto, Cliente, Estoque, NotaDeEntrada, ProdutosPorNota, ProdutosPorVenda, Venda
+from core.models import Produto, Cliente, Estoque, NotaDeEntrada, ProdutosPorNota, ProdutosPorVenda, Venda, Parcela
 
 class EstoqueAdmin(admin.ModelAdmin):
     fields = ('produto', 'valor', 'quantidade')
     list_display = ('produto', 'valor', 'quantidade', 'vendedor')
+
+    def get_queryset(self, request):
+        qs = super(EstoqueAdmin, self).get_queryset(request)
+        qs = qs.filter(vendedor=request.user)
+
+        return qs
 
     def save_model(self, request, obj, form, change):
         obj.vendedor = request.user
@@ -36,11 +42,17 @@ class ProdutosPorVendaInline(admin.TabularInline):
     verbose_name = 'Produto'
 
 class VendaAdmin(admin.ModelAdmin):
+    list_display = ('cliente', 'dataDaVenda', 'total_da_venda')
     inlines = (ProdutosPorVendaInline, )
 
 admin.site.register(Venda, VendaAdmin)
 
+
+class ParcelaAdmin(admin.ModelAdmin):
+    list_display = ('venda', 'valorDaParcela', 'dataDeVencimento')
+
+admin.site.register(Parcela, ParcelaAdmin)
+
 admin.site.register(Produto)
 admin.site.register(Cliente)
-
 # Register your models here.

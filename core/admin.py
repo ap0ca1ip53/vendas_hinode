@@ -41,18 +41,27 @@ class ProdutosPorVendaInline(admin.TabularInline):
     verbose_name_plural = 'Produtos'
     verbose_name = 'Produto'
 
+
+class ParcelaInline(admin.TabularInline):
+    model = Parcela
+    extra = 1
+
 class VendaAdmin(admin.ModelAdmin):
     list_display = ('cliente', 'dataDaVenda', 'total_da_venda')
-    inlines = (ProdutosPorVendaInline, )
+    inlines = (ProdutosPorVendaInline, ParcelaInline)
 
 admin.site.register(Venda, VendaAdmin)
-
 
 class ParcelaAdmin(admin.ModelAdmin):
     list_display = ('venda', 'valorDaParcela', 'dataDeVencimento')
 
 admin.site.register(Parcela, ParcelaAdmin)
 
+class ClientelaAdmin(admin.ModelAdmin):
+    list_display = ('id', 'nome', 'endereco', 'dt_nascimento')
+    list_display_links = ('nome',)
+
+admin.site.register(Cliente, ClientelaAdmin)
+
 admin.site.register(Produto)
-admin.site.register(Cliente)
 # Register your models here.

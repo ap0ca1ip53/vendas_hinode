@@ -1,0 +1,183 @@
+/* CSS para estilizar elementos do template de login */
+
+body.login {
+    background: #555;
+}
+body.login h1 {
+    height: 100px;
+    margin: 20px 0;
+    text-indent: -9000px;
+    width: 100%;
+}
+body.login h3 {
+    color: #999;
+    font-weight: 300;
+}
+body.login #content {
+    margin: 80px auto 15px;
+    overflow: hidden;
+    width: 70%;
+}
+body.login #content form {
+    margin: 50px 0 0;
+}
+body.login .errorlist,
+body.login .messagelist {
+    margin: 10px 0 0;
+    padding: 0 !important;
+}
+body.login .errornote,
+body.login .msg {
+    left: 0;
+    width: 100%;
+}
+body.login .form-row {
+    margin: 0 0 10px;
+}
+body.login .form-row a {
+    display: inline-block;
+    padding: 10px 0 0;
+    width: 100%;
+}
+body.login .form-row input[type="password"],
+body.login .form-row input[type="text"] {
+    background: #fff;
+    border: 1px solid #bbb;
+    font-size: 120%;
+    height: 46px;
+    padding: 0 5px;
+    width: 100%;
+}
+body.login label.required {
+    cursor: default;
+    font-weight: 300 !important;
+}
+body.login label.required:after {
+    content: "";
+}
+body.login .form-row input[type="password"]:active,
+body.login .form-row input[type="password"]:focus,
+body.login .form-row input[type="text"]:active,
+body.login .form-row input[type="text"]:focus {
+    border: 1px solid #999;
+}
+body.login .form-row label {
+    clear: left;
+    color: #666666 !important;
+    font-weight: normal !important;
+    line-height: 1em;
+    padding: 0 5px 0 0;
+    text-align: left !important;
+}
+body.login .login-footer {
+    margin: 5px auto 20px;
+    overflow: hidden;
+    width: 70%;
+}
+body.login .login-footer p {
+    color: #ddd;
+    font-weight: 300;
+    padding: 0 25%;
+    text-align: center;
+}
+body.login .login-footer p a {
+    color: #5bb75b;
+}
+body.login .login-form {
+    background: #eee;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    float: left;
+    margin: 0 0 0 25%;
+    padding: 60px;
+    position: relative;
+    width: 50%;
+}
+body.login .login-services {
+    float: right;
+    padding: 30px 0 40px 40px;
+    width: 25%;
+}
+body.login .login-services h3 {
+    color: #aaa;
+    margin: 0 0 20px;
+}
+body.login .login-services li {
+    color: #666;
+    list-style: none;
+    margin: 0 0 3px;
+}
+body.login .login-services li:last-child a {
+    border-bottom: 0 none; 
+}
+body.login .login-services li a {
+    background-color: transparent;
+    background-position: 0 center;
+    background-repeat: no-repeat;
+    background-size: 22px auto;
+    border-bottom: 1px solid #777;
+    color: #fff;
+    display: inline-block;
+    font-size: 120%;
+    font-weight: 400;
+    padding: 15px 15px 15px 35px;
+    width: 100%;
+}
+body.login .login-services li a:hover {
+    opacity: 0.5;
+    text-decoration: none;
+}
+body.login .login-services ul {
+    padding: 0;
+}
+body.login .login-services .icon-certificado a {
+    background-image: url("/static/comum/img/icon-certificado.png");
+}
+body.login .login-services .icon-documento a {
+    background-image: url("/static/comum/img/icon-documento.png");
+}
+body.login .login-services .icon-protocolo a {
+    background-image: url("/static/comum/img/icon-protocolo.png");
+}
+body.login .login-services .icon-senha a {
+    background-image: url("/static/comum/img/icon-senha.png");
+}
+body.login ul.login-services  {
+    padding: 0;
+    width: 100%;
+}
+body.login .submit-row input[type="submit"] {
+    font-size: 120%;
+    height: 40px;
+    width: 100%;
+}
+
+@media screen and (max-width: 1200px) {
+    body.login #content {
+        width: 80%;
+    }
+}
+@media screen and (max-width: 900px) {
+    body.login .login-form {
+        margin: 0;
+        width: 70%;
+    }
+    body.login .login-services {
+        width: 30%;
+    }
+}
+@media screen and (max-width: 800px) {
+    body.login h1 {
+        background-size: cover cover;
+    }
+    body.login #content {
+        width: 90%;
+    }
+    body.login .login-footer p {
+        padding: 0;
+    }
+    body.login .login-form,
+    body.login .login-services {
+        padding: 30px;
+        width: 100%;
+    }
+}

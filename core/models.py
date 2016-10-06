@@ -70,17 +70,27 @@ class Cliente(models.Model):
     sexo = models.CharField(max_length=1, choices=SEXO)
     endereco = models.CharField(max_length=60)
     bairro = models.CharField(max_length=40)
-    dt_nascimento = models.DateField(null=True, blank=True)
+    dt_nascimento = models.DateField(null=True, blank=True, verbose_name='Data de Nascimento')
     
     def __unicode__(self):
         return self.nome
 
 
+class FormaDePagamento(models.Model):
+    descricao = models.CharField(max_length=60)
+    quantidade_de_parcelas = models.IntegerField()
+    percentual_operadora = models.DecimalField(max_digits=5, decimal_places=2)
+    prazo_para_recebimento = models.IntegerField()
+
+    def __unicode__(self):
+        return self.descricao
+
+
 class Venda(models.Model):
     dataDaVenda = models.DateField(verbose_name='Data da venda')
     cliente = models.ForeignKey(Cliente)
-    quantidadeDeParcelas = models.IntegerField()
     produtosPorVenda = models.ManyToManyField(Estoque, through='ProdutosPorVenda')
+    forma_de_pagamento = models.ForeignKey(FormaDePagamento)
 
     def __unicode__(self):
         return '%s - %s' % (self.cliente.nome, self.dataDaVenda)
@@ -100,13 +110,12 @@ class ProdutosPorVenda(models.Model):
     estoque = models.ForeignKey(Estoque)
     venda = models.ForeignKey(Venda)
     quantidade = models.IntegerField()
-    desconto = models.DecimalField(max_digits=5, decimal_places=2)
     valorDeVenda = models.DecimalField(max_digits=12, decimal_places=2)
+    desconto = models.DecimalField(max_digits=5, decimal_places=2)
 
     def save(self, *args, **kwargs):
         self.estoque.decrementaEstoque(self.quantidade)
         super(ProdutosPorVenda, self).save(*args, **kwargs)
-
 
 class Parcela(models.Model):
     venda = models.ForeignKey(Venda)

@@ -1,0 +1,95 @@
+{% extends 'bootstrap3/bootstrap3.html' %}
+
+{% load bootstrap3 %}
+
+{% load pagination_tags %}
+
+{% block bootstrap3_title %}
+        Migração CENSUP
+{% endblock %}
+
+
+{% block bootstrap3_content %}
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="page-header">
+				<h1>
+					Alunos
+				</h1>
+			</div>
+            <nav class="navbar navbar-default" role="navigation">
+			<form role="search" class="navbar-form navbar-left" method="get">
+
+				<div class="form-group">
+					<input type="text" class="form-control" id="cpf_aluno" placeholder="cpf" name="cpf_aluno">
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control" id="nome_aluno" placeholder="nome" name="nome_aluno">
+				</div>
+                <div class="form-group">
+					<input type="text" class="form-control" id="curso_aluno" placeholder="curso" name="curso_aluno">
+				</div>
+                <button class="btn btn-primary" type="submit">
+                    Localizar
+                </button>
+			</form>
+            </nav>
+			<table class="table table-hover table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>
+							CPF
+						</th>
+						<th>
+							Nome do aluno
+						</th>
+						<th>
+							Data de Nascimento
+						</th>
+						<th>
+                            Sexo
+						</th>
+                        <th>
+                            Cor/Raça
+						</th>
+                        <th>
+                            PNE
+						</th>
+					</tr>
+				</thead>
+                <tbody>
+                {% autopaginate object_list 15 %}
+                {% for aluno in object_list %}
+					<tr>
+						<td>
+							<a href={%  url 'core:aluno_detail' aluno.pk %}> {{ aluno.cpf_aluno }} </a>
+						</td>
+						<td>
+							{{ aluno.nome_aluno }}
+						</td>
+						<td>
+							{{ aluno.data_nascimento }}
+						</td>
+						<td>
+							{{ aluno.sexo }}
+						</td>
+                        <td>
+							{{ aluno.cor_raca }}
+						</td>
+						<td>
+							{{ aluno.portador_deficiencia }}
+						</td>
+					</tr>
+                {% endfor %}
+                </tbody>
+			</table>
+            {% paginate %}
+		</div>
+	</div>
+</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+{% endblock %}

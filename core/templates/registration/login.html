@@ -1,0 +1,31 @@
+{% load crispy_forms_tags %}
+
+{% block bootstrap3_extra_head %}
+<link href="/static/core/css/jumbotron-narrow.css" rel="stylesheet">
+{% endblock %}
+
+{# Display a form #}
+
+
+{% block bootstrap3_content %}
+<form action="{%  url 'login' %}" method="post" class="form">
+    {% csrf_token %}
+
+    <div class="container">
+
+        <div class="header clearfix">
+            <h3 class="text-muted">Migração CENSUP - Login</h3>
+        </div>
+
+            {% crispy form %}
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">
+                Login
+            </button>
+
+    </div>
+    <input type="hidden" name="next" value="{{ next }}" />
+</form>
+{% endblock %}
+{# Read the documentation for more information #}
+

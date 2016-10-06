@@ -11,13 +11,13 @@ def home(request):
 
 def login_view(request, *args, **kwargs):
     if request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('users:home'))
+        return HttpResponseRedirect(reverse('hinode:home'))
 
-    kwargs['extra_context'] = {'next': '/admin'}
+    kwargs['extra_context'] = {'next': 'hinode:home'}
     kwargs['template_name'] = 'core/login.html'
     return login(request, *args, **kwargs)
 
 
 def logout_view(request, *args, **kwargs):
-    kwargs['next_page'] = reverse('users:home')
+    kwargs['next_page'] = reverse('hinode:home')
     return logout(request, *args, **kwargs)

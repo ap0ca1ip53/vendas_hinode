@@ -1,8 +1,5 @@
 /* CSS para estilizar elementos do template de login */
 
-body.login {
-    background: #555;
-}
 body.login h1 {
     height: 100px;
     margin: 20px 0;

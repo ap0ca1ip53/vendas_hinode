@@ -8,6 +8,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from core.models import Cliente
+from core.forms import ClienteForm
 
 
 def index(request):
@@ -33,5 +34,4 @@ class ClienteList(ListView):
 
 class ClienteCreate(CreateView):
     model = Cliente
-    fields = ['nome', 'sexo']
-    form_class = 
+    form_class = ClienteForm

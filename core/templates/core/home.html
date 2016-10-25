@@ -1,14 +1,25 @@
 {% extends "core/base.html" %}
 
-{% block title %} Sistema de controle de vendas HINODE {% endblock %}
+{% load bootstrap3 %}
 
-{% block content %}
-    <p>Seja bem vindo {% if user.is_authenticated %}{{ user.first_name }}{% else %}usuário anônimo{% endif %}</p>
+{% block bootstrap3_title %}Sistema de controle de vendas HINODE{% endblock %}
 
+{% block bootstrap3_extra_head %}
+    <link href="/static/core/css/core.css" rel="stylesheet">
+{% endblock %}
+
+{% block bootstrap3_content %}
     {% if user.is_authenticated %}
-        <p><a href="{% url 'users:logout' %}">Logout</a>.</p>
+        {% include "core/cabecalho_pagina.html" %}
+
+        <div class="container-fluid">
+            <div class="row">
+                {% include "core/barra_lateral.html" %}
+            </div>
+        </div>
+
     {% else %}
-        <p><a href="{% url 'users:login' %}">Login</a>.</p>
+        <p><a href="{% url 'core:login' %}">Login</a>.</p>
     {% endif %}
 
 {% endblock %}

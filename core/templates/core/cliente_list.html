@@ -1,0 +1,68 @@
+{% extends 'core/base.html' %}
+
+{% block bootstrap3_title %}
+    Sistema de controle de vendas HINODE
+{% endblock %}
+
+{% block bootstrap3_extra_head %}
+    <link href="/static/core/css/core.css" rel="stylesheet">
+{% endblock %}
+
+{% block bootstrap3_content %}
+
+    {% include "core/cabecalho_pagina.html" %}
+
+    <div class="container">
+        {% include "core/barra_lateral.html" %}
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div class="page-header">
+                    <h1>
+                        Clientes
+                    </h1>
+                </div>
+
+                <nav class="navbar navbar-default barra_opcoes" role="navigation">
+                    <ul class="nav nav-pills pull-right">
+                        <li role="presentation" class="active"><a href="{% url 'core:clientes_add' %}">Novo</a></li>
+                        <li role="presentation"><a href="#">About</a></li>
+                        <li role="presentation"><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <table class="table table-hover table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Nome
+                            </th>
+                            <th>
+                                Data de Nascimento
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for cliente in object_list %}
+                        <tr>
+                            <td>
+                                {{ cliente.nome }}
+                            </td>
+                            <td>
+                                {{ cliente.dt_nascimento }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+{% endblock %}

@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import date
 
 # Create your models here.
 class Produto(models.Model):
@@ -60,7 +61,6 @@ class ProdutosPorNota(models.Model):
         self.estoque.incrementaEstoque(self.quantidade)
         super(ProdutosPorNota, self).save(*args, **kwargs)
 
-
 class Cliente(models.Model):
     SEXO = (
         ('M', 'Masculino'),
@@ -70,10 +70,25 @@ class Cliente(models.Model):
     sexo = models.CharField(max_length=1, choices=SEXO)
     endereco = models.CharField(max_length=60)
     bairro = models.CharField(max_length=40)
+    cidade = models.CharField(max_length=40)
+    telefone = models.CharField(max_length=11)
+    celular = models.CharField(max_length=11)
     dt_nascimento = models.DateField(null=True, blank=True, verbose_name='Data de Nascimento')
     
     def __unicode__(self):
         return self.nome
+
+    @property
+    def idade(self):
+        today = date.today()
+        try:
+            birthday = self.dt_nascimento.replace(year=today.year)
+        except ValueError:  # raised when birth date is February 29 and the current year is not a leap year
+            birthday = self.dt_nascimento.replace(year=today.year, month=self.dt_nascimento.month + 1, day=1)
+        if birthday > today:
+            return today.year - self.dt_nascimento.year - 1
+        else:
+            return today.year - self.dt_nascimento.year
 
 
 class FormaDePagamento(models.Model):

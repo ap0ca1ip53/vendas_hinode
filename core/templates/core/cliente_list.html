@@ -41,7 +41,13 @@
                                 Nome
                             </th>
                             <th>
-                                Data de Nascimento
+                                Bairro
+                            </th>
+                            <th>
+                                Celular
+                            </th>
+                            <th>
+                                Idade
                             </th>
                         </tr>
                     </thead>
@@ -52,7 +58,13 @@
                                 {{ cliente.nome }}
                             </td>
                             <td>
-                                {{ cliente.dt_nascimento }}
+                                {{ cliente.bairro }}
+                            </td>
+                            <td>
+                                {{ cliente.celular }}
+                            </td>
+                            <td>
+                                {{ cliente.idade }}
                             </td>
                         </tr>
                     {% endfor %}

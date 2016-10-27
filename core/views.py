@@ -6,9 +6,10 @@ from django.contrib.auth.views import login, logout
 from django.core.urlresolvers import reverse
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from core.models import Cliente
 from core.forms import ClienteForm
+from django.urls import reverse_lazy
 
 
 def index(request):
@@ -35,3 +36,19 @@ class ClienteList(ListView):
 class ClienteCreate(CreateView):
     model = Cliente
     form_class = ClienteForm
+    success_url = reverse_lazy('hinode:clientes_list')
+
+class ClienteUpdate(UpdateView):
+    model = Cliente
+    form_class = ClienteForm
+    success_url = reverse_lazy('hinode:clientes_list')
+
+def exclui_cliente(request, idCliente):
+    # Excluir cliente
+    # Redirecionar para a listview
+    pass
+
+class ClienteDelete(DeleteView):
+    model = Cliente
+    form_class = ClienteForm
+    success_url = reverse_lazy('hinode:clientes_list')

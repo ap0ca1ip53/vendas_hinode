@@ -1,0 +1,44 @@
+{% extends "core/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block bootstrap3_title %}Sistema de controle de vendas HINODE{% endblock %}
+
+{% block bootstrap3_extra_head %}
+    <link href="/static/core/css/core.css" rel="stylesheet">
+</head>
+
+{% endblock %}
+
+{% block bootstrap3_content %}
+
+    {% include "core/cabecalho_pagina.html" %}
+
+    <div class="container">
+        {% include "core/barra_lateral.html" %}
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div class="page-header">
+                    <h1>
+                        Nova Venda
+                    </h1>
+                </div>
+
+                <form action="." class="crispy form-horizontal" method="post">
+                    {% crispy form %}
+                    {{ produto_form.management_form }}
+                    {{ produto_form.non_form_errors }}
+
+                    {% crispy produto_form produto_formhelper %}
+
+                    <input class='btn btn-primary' type='submit' value='Save'>
+
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

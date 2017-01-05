@@ -25,7 +25,7 @@ class Produto(models.Model):
 
 class Estoque(models.Model):
     produto = models.ForeignKey(Produto)
-    vendedor = models.ForeignKey(User)
+    consultor = models.ForeignKey(User)
     valor = models.DecimalField(max_digits=12, decimal_places=2)
     quantidade = models.IntegerField()
 

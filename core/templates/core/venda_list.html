@@ -31,13 +31,13 @@
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <div class="page-header">
                     <h1>
-                        Clientes
+                        Vendas
                     </h1>
                 </div>
 
                 <nav class="navbar navbar-default barra_opcoes" role="navigation">
                     <ul class="nav nav-pills pull-right">
-                        <li role="presentation" class="active"><a href="{% url 'core:clientes_add' %}">Novo</a></li>
+                        <li role="presentation" class="active"><a href="{% url 'core:vendas_add' %}">Novo</a></li>
                     </ul>
                 </nav>
 
@@ -45,16 +45,16 @@
                     <thead>
                         <tr>
                             <th>
-                                Nome
+                                Cliente
                             </th>
                             <th>
-                                Bairro
+                                Data
                             </th>
                             <th>
-                                Celular
+                                Forma
                             </th>
                             <th>
-                                Idade
+                                Total
                             </th>
                             <th>
 
@@ -65,25 +65,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for cliente in object_list %}
+                    {% for venda in object_list %}
                         <tr>
                             <td>
-                                {{ cliente.nome }}
+                                {{ venda.cliente.nome }}
                             </td>
                             <td>
-                                {{ cliente.bairro }}
+                                {{ venda.dataDaVenda }}
                             </td>
                             <td>
-                                {{ cliente.celular }}
+                                {{ venda.forma_de_pagamento.descricao }}
                             </td>
                             <td>
-                                {{ cliente.idade }}
+                                {{ venda.total_da_venda }}
                             </td>
                             <td>
-                                <a href="{% url 'hinode:clientes_update' cliente.pk %}">Alterar</a>
+                                <a href="#">Alterar</a>
                             </td>
                             <td>
-                                <a href="{% url 'hinode:clientes_delete' cliente.pk %}" onclick="exclui(event)">Excluir</a>
+                                <a href="#" onclick="exclui(event)">Excluir</a>
                             </td>
                         </tr>
                     {% endfor %}

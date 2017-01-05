@@ -5,16 +5,16 @@ from core.models import Produto, Cliente, Estoque, NotaDeEntrada, ProdutosPorNot
 
 class EstoqueAdmin(admin.ModelAdmin):
     fields = ('produto', 'valor', 'quantidade')
-    list_display = ('produto', 'valor', 'quantidade', 'vendedor')
+    list_display = ('produto', 'valor', 'quantidade', 'consultor')
 
     def get_queryset(self, request):
         qs = super(EstoqueAdmin, self).get_queryset(request)
-        qs = qs.filter(vendedor=request.user)
+        qs = qs.filter(consultor=request.user)
 
         return qs
 
     def save_model(self, request, obj, form, change):
-        obj.vendedor = request.user
+        obj.consultor = request.user
         obj.save()
 
 admin.site.register(Estoque, EstoqueAdmin)
